@@ -14,6 +14,7 @@ public class CSVFileLoader {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             headers = readHeader(reader);
             rows = readRows(reader);
+            reader.close();
         } catch (IOException e) {
             throw new RuntimeException("[ERROR] CSV 파일 읽는 중 오류 발생");
         }
