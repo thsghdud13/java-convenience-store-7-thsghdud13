@@ -6,11 +6,13 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.dto.request.PromotionInfoDto;
 import store.model.domain.promotion.NonePromotion;
 import store.model.domain.promotion.PromotionPolicy;
+import store.repository.InMemoryPromotionRepository;
 import store.repository.PromotionRepository;
 
 class PromotionServiceImplTest {
@@ -21,6 +23,11 @@ class PromotionServiceImplTest {
     void setUp() {
         promotionRepository = new PromotionRepositoryMock();
         promotionService = new PromotionServiceImpl(promotionRepository);
+    }
+
+    @AfterEach
+    void cleanUp() {
+        InMemoryPromotionRepository.getInstance().clear();
     }
 
     @Test
@@ -49,6 +56,11 @@ class PromotionServiceImplTest {
         @Override
         public PromotionPolicy findByName(String name) {
             return promotions.getOrDefault(name, new NonePromotion());
+        }
+
+        @Override
+        public void clear() {
+            promotions.clear();
         }
     }
 }

@@ -3,7 +3,6 @@ package store.service;
 import java.util.List;
 import store.dto.request.PromotionInfoDto;
 import store.model.domain.promotion.BuyNGet1Promotion;
-import store.model.domain.promotion.DatePromotionCondition;
 import store.repository.PromotionRepository;
 
 public class PromotionServiceImpl implements PromotionService {
@@ -18,8 +17,8 @@ public class PromotionServiceImpl implements PromotionService {
         for (PromotionInfoDto promotionInfoDto : promotionInfoDtos) {
             promotionRepository.save(
                     new BuyNGet1Promotion(promotionInfoDto.getName(), promotionInfoDto.getBuyQuantity(),
-                            promotionInfoDto.getGetQuantity(), promotionInfoDto.getStartDate(),
-                            promotionInfoDto.getEndDate(), new DatePromotionCondition()));
+                            promotionInfoDto.getGetQuantity(), promotionInfoDto.getStartDate().atStartOfDay(),
+                            promotionInfoDto.getEndDate().atTime(23, 59, 59)));
         }
     }
 }
