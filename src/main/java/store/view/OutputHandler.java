@@ -33,12 +33,12 @@ public class OutputHandler {
             System.out.printf("%-19s %-10d %,7d%n", item.getItemName(), item.getQuantity(), item.getTotalPrice());
         }
 
-        System.out.println("=============증\t정===============");
+        System.out.println("=============증     정===============");
         for (FreeItem item : receipt.getFreeItems()) {
             System.out.printf("%-19s %-10d%n", item.getItemName(), item.getQuantity());
         }
 
-        System.out.println("===================================");
+        System.out.println("====================================");
         System.out.printf("%-19s %-10d %,7d%n", "총구매액", receipt.getTotalQuantity(), receipt.getTotalPrice());
         System.out.printf("%-19s %-10s %7s%n", "행사할인", "", receipt.getPromotionDiscount());
         System.out.printf("%-19s %-10s %7s%n", "멤버십할인", "", receipt.getMembershipDiscount());
