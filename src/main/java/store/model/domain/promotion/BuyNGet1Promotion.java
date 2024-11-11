@@ -62,6 +62,9 @@ public class BuyNGet1Promotion implements PromotionPolicy {
     }
 
     private int calculateNonAppliedQuantity(OrderItem orderItem, int availablePromotionQuantity) {
+        if (calculateAppliedQuantity(orderItem, availablePromotionQuantity) == 0) {
+            return 0;
+        }
         if (orderItem.getTotalOrderQuantity() > availablePromotionQuantity && availablePromotionQuantity != 0) {
             int promotionCount = availablePromotionQuantity / (buy + get);
             return orderItem.getTotalOrderQuantity() - promotionCount * (buy + get);
