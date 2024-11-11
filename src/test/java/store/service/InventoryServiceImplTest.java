@@ -2,18 +2,22 @@ package store.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.dto.request.ProductInfoDto;
 import store.model.domain.Item;
+import store.model.domain.Order;
 import store.model.domain.promotion.BuyNGet1Promotion;
 import store.model.domain.promotion.NonePromotion;
 import store.model.domain.promotion.PromotionPolicy;
+import store.repository.InMemoryInventoryRepository;
+import store.repository.InMemoryPromotionRepository;
 import store.repository.InventoryRepository;
 import store.repository.PromotionRepository;
 
@@ -30,10 +34,16 @@ class InventoryServiceImplTest {
         inventoryService = new InventoryServiceImpl(inventoryRepository, promotionRepository);
     }
 
+    @AfterEach
+    void cleanUp() {
+        InMemoryInventoryRepository.getInstance().clear();
+        InMemoryPromotionRepository.getInstance().clear();
+    }
+
     @Test
     void save() {
         //given
-        promotionRepository.save(new BuyNGet1Promotion("반짝할인", 1, 1, LocalDate.now(), LocalDate.now()));
+        promotionRepository.save(new BuyNGet1Promotion("반짝할인", 1, 1, LocalDateTime.MIN, LocalDateTime.MAX));
         List<ProductInfoDto> productInfoDtos = List.of(new ProductInfoDto("물", 1000, 1, "반짝할인"));
 
         //when
@@ -56,6 +66,11 @@ class InventoryServiceImplTest {
         public PromotionPolicy findByName(String name) {
             return promotions.getOrDefault(name, new NonePromotion());
         }
+
+        @Override
+        public void clear() {
+            promotions.clear();
+        }
     }
 
     static class InventoryRepositoryMock implements InventoryRepository {
@@ -67,8 +82,23 @@ class InventoryServiceImplTest {
         }
 
         @Override
+        public void update(Order order) {
+
+        }
+
+        @Override
+        public Item findByName(String name) {
+            return null;
+        }
+
+        @Override
         public List<Item> findAll() {
             return new ArrayList<>(items);
+        }
+
+        @Override
+        public void clear() {
+            items.clear();
         }
     }
 }
