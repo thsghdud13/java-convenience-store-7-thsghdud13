@@ -31,7 +31,7 @@ public class Item {
     }
 
     public boolean isOrderable(int orderQuantity) {
-        return regularQuantity + promotionQuantity > orderQuantity;
+        return regularQuantity + promotionQuantity >= orderQuantity;
     }
 
     public String getName() {
