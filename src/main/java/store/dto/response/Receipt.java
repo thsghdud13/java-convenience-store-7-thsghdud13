@@ -37,12 +37,12 @@ public class Receipt {
         return totalPrice;
     }
 
-    public int getPromotionDiscount() {
-        return promotionDiscount;
+    public String getPromotionDiscount() {
+        return "-" + String.format("%,d", promotionDiscount);
     }
 
-    public int getMembershipDiscount() {
-        return membershipDiscount;
+    public String getMembershipDiscount() {
+        return "-" + String.format("%,d", membershipDiscount);
     }
 
     public int getSum() {
