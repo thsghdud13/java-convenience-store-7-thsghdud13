@@ -6,4 +6,6 @@ public interface PromotionRepository {
     void save(PromotionPolicy promotionPolicy);
 
     PromotionPolicy findByName(String name);
+
+    void clear();
 }

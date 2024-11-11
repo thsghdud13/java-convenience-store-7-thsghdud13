@@ -26,4 +26,9 @@ public class InMemoryPromotionRepository implements PromotionRepository {
     public PromotionPolicy findByName(String name) {
         return promotions.getOrDefault(name, new NonePromotion());
     }
+
+    @Override
+    public void clear() {
+        promotions.clear();
+    }
 }
