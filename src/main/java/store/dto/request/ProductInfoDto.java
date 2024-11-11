@@ -25,6 +25,24 @@ public class ProductInfoDto {
         return quantity;
     }
 
+    public boolean isNonPromotion() {
+        return promotionName.equals("null");
+    }
+
+    public int getRegularQuantity() {
+        if (isNonPromotion()) {
+            return quantity;
+        }
+        return 0;
+    }
+
+    public int getPromotionQuantity() {
+        if (!isNonPromotion()) {
+            return quantity;
+        }
+        return 0;
+    }
+
     public String getPromotionName() {
         return promotionName;
     }
