@@ -113,7 +113,7 @@ public class InputHandler {
 
     public static UserInput getUserInputForMembership() {
         try {
-            OutputView.print("멤버십 적용?(Y/N)");
+            OutputView.print("멤버십 할인을 받으시겠습니까? (Y/N)");
             return toUserInput(InputView.read());
         } catch (ParseErrorHandler e) {
             OutputView.printError(e);
