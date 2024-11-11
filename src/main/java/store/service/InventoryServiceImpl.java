@@ -1,10 +1,10 @@
 package store.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import store.dto.request.ProductInfoDto;
 import store.dto.response.InventoryResponseDto;
 import store.model.domain.Item;
-import store.model.domain.Order;
 import store.model.domain.promotion.PromotionPolicy;
 import store.repository.InventoryRepository;
 import store.repository.PromotionRepository;
@@ -21,21 +21,29 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public void save(List<ProductInfoDto> productInfoDtos) {
         for (ProductInfoDto productInfoDto : productInfoDtos) {
-            PromotionPolicy promotionPolicy = promotionRepository.findByName(productInfoDto.getName());
+            PromotionPolicy promotionPolicy = promotionRepository.findByName(productInfoDto.getPromotionName());
             inventoryRepository.save(
-                    new Item(productInfoDto.getName(), productInfoDto.getPrice(), productInfoDto.getQuantity(),
-                            promotionPolicy));
+                    new Item(productInfoDto.getName(), productInfoDto.getPrice(), productInfoDto.getRegularQuantity(),
+                            productInfoDto.getPromotionQuantity(), promotionPolicy));
         }
     }
 
     @Override
-    public InventoryResponseDto findAll() {
-        return null;
+    public List<InventoryResponseDto> findAll() {
+        List<Item> items = inventoryRepository.findAll();
+        return items.stream()
+                .map(InventoryResponseDto::new)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public void update(Order order) {
 
+    @Override
+    public Item findByItemName(String name) {
+        Item item = inventoryRepository.findByName(name);
+        if (item == null) {
+            throw new IllegalArgumentException("그런 상품은 없음");
+        }
+        return item;
     }
 
 }
