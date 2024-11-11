@@ -40,8 +40,8 @@ public class OutputHandler {
 
         System.out.println("===================================");
         System.out.printf("%-19s %-10d %,7d%n", "총구매액", receipt.getTotalQuantity(), receipt.getTotalPrice());
-        System.out.printf("%-19s %-10s %,7d%n", "행사할인", "", -receipt.getPromotionDiscount());
-        System.out.printf("%-19s %-10s %,7d%n", "멤버십할인", "", -receipt.getMembershipDiscount());
+        System.out.printf("%-19s %-10s -%,7d%n", "행사할인", "", receipt.getPromotionDiscount());
+        System.out.printf("%-19s %-10s -%,7d%n", "멤버십할인", "", receipt.getMembershipDiscount());
         System.out.printf("%-19s %-10s %,7d%n\n", "내실돈", "", receipt.getSum());
     }
 
