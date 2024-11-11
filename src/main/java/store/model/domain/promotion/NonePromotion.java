@@ -8,6 +8,11 @@ public class NonePromotion implements PromotionPolicy {
     private final String name = "none";
 
     @Override
+    public boolean isPromotion() {
+        return false;
+    }
+
+    @Override
     public String getPromotionName() {
         return name;
     }
